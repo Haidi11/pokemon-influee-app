@@ -28,7 +28,7 @@ const CardDeck = ({ title: initialTitle, onDropPokemon, initialDeck }) => {
     };
 
     return (
-        <div ref={drop} className={`bg-white rounded-lg shadow-lg text-left  p-3.5 min-h-40 min-w-209 ${isOver ? 'opacity-100' : ''}`}>
+        <div ref={drop} className={`bg-white rounded-lg shadow-lg text-left  p-3.5 pr-[5px] min-h-40 min-w-209 ${isOver ? 'opacity-100' : ''}`}>
             <input
                 type="text"
                 value={title}
