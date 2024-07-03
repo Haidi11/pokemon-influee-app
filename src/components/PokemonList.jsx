@@ -8,6 +8,7 @@ const PokemonList = () => {
     const [deck2, setDeck2] = useState([]);
     const [selectedPokemon, setSelectedPokemon] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [outOfPokemon, setOutOfPokemon] = useState(false); // State to track if no more Pokémon are left
     const currentIndexRef = useRef(currentIndex);
 
     useEffect(() => {
@@ -60,20 +61,28 @@ const PokemonList = () => {
 
     const handleDropPokemon1 = () => {
         const index = currentIndexRef.current;
-        const pokemonToAdd = pokemonList[index];
-        setDeck1((prevDeck) => {
-            return [...prevDeck, pokemonToAdd];
-        });
-        setCurrentIndex((prevIndex) => prevIndex + 1);
+        if (index < pokemonList.length) {
+            const pokemonToAdd = pokemonList[index];
+            setDeck1((prevDeck) => {
+                return [...prevDeck, pokemonToAdd];
+            });
+            setCurrentIndex((prevIndex) => prevIndex + 1);
+        } else {
+            setOutOfPokemon(true); // Set flag to true when no more Pokémon are left
+        }
     };
 
     const handleDropPokemon2 = () => {
         const index = currentIndexRef.current;
-        const pokemonToAdd = pokemonList[index];
-        setDeck2((prevDeck) => {
-            return [...prevDeck, pokemonToAdd];
-        });
-        setCurrentIndex((prevIndex) => prevIndex + 1);
+        if (index < pokemonList.length) {
+            const pokemonToAdd = pokemonList[index];
+            setDeck2((prevDeck) => {
+                return [...prevDeck, pokemonToAdd];
+            });
+            setCurrentIndex((prevIndex) => prevIndex + 1);
+        } else {
+            setOutOfPokemon(true); // Set flag to true when no more Pokémon are left
+        }
     };
 
     if (pokemonList.length === 0) return <p>Loading...</p>;
@@ -83,7 +92,13 @@ const PokemonList = () => {
             <div className="w-133 min-w-133 h-164 flex flex-col justify-center items-center rounded overflow-hidden bg-white shadow-lg">
                 <h2 className='font-montserrat text-black font-sans text-lg font-bold tracking-tight text-center'>Card Stack</h2>
                 <div>
-                    <PokemonCard onSelect={handleSelectPokemon} pokemon={pokemonList[currentIndex]} />
+                    {outOfPokemon ? (
+                        <p>No more Pokémon left!</p>
+                    ) : (
+                        pokemonList[currentIndex] && (
+                            <PokemonCard onSelect={handleSelectPokemon} pokemon={pokemonList[currentIndex]} />
+                        )
+                    )}
                 </div>
             </div>
 
