@@ -28,14 +28,14 @@ const CardDeck = ({ title: initialTitle, onDropPokemon, initialDeck }) => {
     };
 
     return (
-        <div ref={drop} className='bg-white rounded shadow-lg min-h-40 min-w-209'>
+        <div ref={drop} className={`bg-white rounded-lg shadow-lg text-left  p-3.5 min-h-40 min-w-209 ${isOver ? 'opacity-100' : ''}`}>
             <input
                 type="text"
                 value={title}
                 onChange={handleTitleChange}
-                className="opacity-100 text-black font-bold text-base tracking-tight p-1.5 text-left outline-none"
+                className="rounded-lg text-black font-bold text-base tracking-tight text-left outline-none"
             />
-            <div className="flex flex-wrap justify-center">
+            <div className="flex flex-wrap justify-start place-content-around">
                 {deck.map((pokemon, index) => (
                     <PokemonCard key={index} pokemon={pokemon} />
                 ))}

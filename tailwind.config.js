@@ -10,7 +10,7 @@ module.exports = {
       height: {
         '164': '164px',
         '106':'106px',
-        '360': '360px',
+        '350': '350px',
       },
       width: {
         '133':'133px',
@@ -27,6 +27,9 @@ module.exports = {
       },
       colors: {
         'customGray':'#BCC4CC'
+      },
+      fontSize: { 
+        '10' : '10px'
       },
     },
   },
