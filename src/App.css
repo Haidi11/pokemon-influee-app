@@ -1,0 +1,7 @@
+.App {
+  text-align: center;
+  background-image: url("../public/assets/images/pokemon-bg.png");
+  background-size: cover;
+  min-height: 100vh;
+  color: white;
+}
