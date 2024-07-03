@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
-import styles from './PokemonList.module.css';
 
 const PokemonCard = ({ pokemon, onSelect }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
@@ -15,11 +14,9 @@ const PokemonCard = ({ pokemon, onSelect }) => {
     <div
       ref={drag}
       onMouseDown={() => {
-        onSelect && onSelect(pokemon); // Call onSelect callback with the pokemon
+        onSelect && onSelect(pokemon);
       }}
-      className={styles.card}
-      style={{ opacity: isDragging ? 0.5 : 1 }}
-    >
+      className="rounded-lg border border-gray-300 shadow-sm bg-white">
       <img src={pokemon.sprite} alt={pokemon.name} />
       <div>
         <div className='font-montserrat opacity-100 text-black font-semibold text-xs tracking-tight text-center capitalize'>
