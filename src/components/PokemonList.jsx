@@ -89,7 +89,7 @@ const PokemonList = () => {
 
             <div className='w-screen h-screen flex justify-center items-center mr-133'>
                 {selectedPokemon && (
-                    <div className="max-w-sm rounded overflow-hidden h-350 w-283 bg-white shadow-lg">
+                    <div className="max-w-sm rounded-lg overflow-hidden h-350 w-283 bg-white shadow-lg">
                         <div className="px-6 py-4">
                             <img className="w-[252px] h-[256px] mx-auto" src={selectedPokemon.sprite} alt={selectedPokemon.name} />
                             <div className="flex mx-auto justify-between items-center">
