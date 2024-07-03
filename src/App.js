@@ -1,9 +1,10 @@
 import './App.css';
+import PokemonList from './components/PokemonList';
 
 function App() {
   return (
     <div className="App">
-      Hello World
+      <PokemonList></PokemonList>
     </div>
   );
 }
