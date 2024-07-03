@@ -35,9 +35,11 @@ const CardDeck = ({ title: initialTitle, onDropPokemon, initialDeck }) => {
                 onChange={handleTitleChange}
                 className="rounded-lg text-black font-bold text-base tracking-tight text-left outline-none"
             />
-            <div className="flex flex-wrap justify-start place-content-around">
+            <div className="flex flex-wrap justify-start place-content-between">
                 {deck.map((pokemon, index) => (
-                    <PokemonCard key={index} pokemon={pokemon} />
+                    <div className="mr-2.5">
+                        <PokemonCard key={index} pokemon={pokemon}/>
+                    </div>
                 ))}
             </div>
         </div>

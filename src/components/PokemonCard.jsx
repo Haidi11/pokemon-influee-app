@@ -16,7 +16,7 @@ const PokemonCard = ({ pokemon, onSelect }) => {
       onMouseDown={() => {
         onSelect && onSelect(pokemon);
       }}
-      className="rounded-sm border w-84 h-106 mr-[5px] border-gray-200 border-opacity-30 shadow-sm bg-white">
+      className="rounded-sm border w-84 h-106 border-gray-200 border-opacity-30 shadow-sm bg-white">
       <img src={pokemon.sprite} alt={pokemon.name} />
       <div>
         <div className='font-montserrat opacity-100 text-black font-semibold text-xs tracking-tight text-center capitalize'>
