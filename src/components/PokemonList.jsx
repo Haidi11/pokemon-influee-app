@@ -8,7 +8,7 @@ const PokemonList = () => {
     const [deck2, setDeck2] = useState([]);
     const [selectedPokemon, setSelectedPokemon] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [outOfPokemon, setOutOfPokemon] = useState(false); // State to track if no more Pokémon are left
+    const [outOfPokemon, setOutOfPokemon] = useState(false);
     const currentIndexRef = useRef(currentIndex);
 
     useEffect(() => {
@@ -68,7 +68,7 @@ const PokemonList = () => {
             });
             setCurrentIndex((prevIndex) => prevIndex + 1);
         } else {
-            setOutOfPokemon(true); // Set flag to true when no more Pokémon are left
+            setOutOfPokemon(true);
         }
     };
 
@@ -81,7 +81,7 @@ const PokemonList = () => {
             });
             setCurrentIndex((prevIndex) => prevIndex + 1);
         } else {
-            setOutOfPokemon(true); // Set flag to true when no more Pokémon are left
+            setOutOfPokemon(true);
         }
     };
 
