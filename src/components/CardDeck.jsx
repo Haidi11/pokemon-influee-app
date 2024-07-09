@@ -1,26 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import PokemonCard from './PokemonCard';
 
-const CardDeck = ({ title: initialTitle, onDropPokemon, initialDeck }) => {
-    const [deck, setDeck] = useState(initialDeck || []);
+const CardDeck = ({ title: initialTitle, onDropPokemon, initialDeck, deck, deckId, onRemovePokemon }) => {
     const [title, setTitle] = useState(initialTitle);
+    const [selectedPokemon, setSelectedPokemon] = useState(null);
 
     useEffect(() => {
-        setDeck(initialDeck || []);
-    }, [initialDeck]);
+    }, [deck, deckId]);
 
     const [{ isOver }, drop] = useDrop(() => ({
         accept: 'POKEMON',
-        drop: (item) => handleDrop(item.pokemon),
+        drop: (item) => handleDrop(item.pokemon, item.deckId),
         collect: (monitor) => ({
             isOver: !!monitor.isOver(),
         }),
     }));
 
-    const handleDrop = (pokemon) => {
-        setDeck((prevDeck) => [...prevDeck, pokemon]);
-        onDropPokemon(pokemon);
+    const handleSelectPokemon = (pokemon) => {
+        setSelectedPokemon(pokemon);
+    };
+
+    const handleDrop = (pokemon, sourceDeckId) => {
+        if (!pokemon) return;
+
+        onDropPokemon(pokemon, sourceDeckId, deckId);
     };
 
     const handleTitleChange = (e) => {
@@ -28,7 +32,7 @@ const CardDeck = ({ title: initialTitle, onDropPokemon, initialDeck }) => {
     };
 
     return (
-        <div ref={drop} className={`bg-white rounded-lg shadow-lg text-left  p-3.5 pr-[5px] min-h-40 min-w-209 ${isOver ? 'opacity-100' : ''}`}>
+        <div ref={drop} className={`bg-white rounded-lg shadow-lg text-left p-3.5 pr-[5px] min-h-40 min-w-209 ${isOver ? 'opacity-100' : ''}`}>
             <input
                 type="text"
                 value={title}
@@ -37,8 +41,8 @@ const CardDeck = ({ title: initialTitle, onDropPokemon, initialDeck }) => {
             />
             <div className="flex flex-wrap justify-start place-content-between">
                 {deck.map((pokemon, index) => (
-                    <div className="mr-2.5">
-                        <PokemonCard key={index} pokemon={pokemon}/>
+                    <div key={index} className="mr-2.5">
+                        <PokemonCard key={index} pokemon={pokemon} deckId={deckId} onRemove={onRemovePokemon} />
                     </div>
                 ))}
             </div>
