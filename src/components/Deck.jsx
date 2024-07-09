@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import { React, useState }from 'react';
 import { useDrop } from 'react-dnd';
 import PokemonCard from './PokemonCard';
 
-const Deck = ({ title: initialTitle, onDropPokemon, deck, deckId, onRemovePokemon }) => {
+const Deck = ({ title: initialTitle, onDropPokemon, onSelectPokemon, selectedPokemon, deck, deckId, onRemovePokemon }) => {
     const [title, setTitle] = useState(initialTitle);
-    const [selectedPokemon, setSelectedPokemon] = useState(null);
 
     const [{ isOver }, drop] = useDrop(() => ({
         accept: 'POKEMON',
@@ -17,10 +16,6 @@ const Deck = ({ title: initialTitle, onDropPokemon, deck, deckId, onRemovePokemo
     const handleDrop = (pokemon, sourceDeckId) => {
         if (!pokemon) return;
         onDropPokemon(pokemon, sourceDeckId, deckId);
-    };
-
-    const handleSelectPokemon = (pokemon) => {
-        setSelectedPokemon((prevSelected) => (prevSelected === pokemon ? null : pokemon));
     };
 
     const handleTitleChange = (e) => {
@@ -39,8 +34,8 @@ const Deck = ({ title: initialTitle, onDropPokemon, deck, deckId, onRemovePokemo
                 {deck.map((pokemon, index) => (
                     <div
                         key={index}
-                        onClick={() => handleSelectPokemon(pokemon)}
-                        className={`mr-2.5 ${selectedPokemon === pokemon ? 'border-2 border-blue-500 rounded-md shadow-lg' : ''}`}
+                        onClick={() => onSelectPokemon(pokemon)}
+                        className={`mr-2.5 ${selectedPokemon?.name === pokemon.name ? 'border-2 border-blue-500 rounded-md shadow-lg' : ''}`}
                     >
                         <PokemonCard pokemon={pokemon} deckId={deckId} onRemove={onRemovePokemon} />
                     </div>

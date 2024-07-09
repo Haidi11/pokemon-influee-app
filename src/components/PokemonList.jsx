@@ -8,7 +8,6 @@ const PokemonList = () => {
     const [deck2, setDeck2] = useState([]);
     const [selectedPokemon, setSelectedPokemon] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [outOfPokemon, setOutOfPokemon] = useState(false);
     const currentIndexRef = useRef(currentIndex);
     const currentPokemonRef = useRef(null);
 
@@ -66,25 +65,27 @@ const PokemonList = () => {
 
     const handleDropPokemon = (pokemon, sourceDeckId, destinationDeckId) => {
         if (!pokemon) return;
-    
+
         if (sourceDeckId === destinationDeckId) return;
-    
+
         if (sourceDeckId === 'deck1') {
             setDeck1((prevDeck) => prevDeck.filter((p) => p.name !== pokemon.name));
         } else if (sourceDeckId === 'deck2') {
             setDeck2((prevDeck) => prevDeck.filter((p) => p.name !== pokemon.name));
         }
-    
+
         if (destinationDeckId === 'deck1') {
             setDeck1((prevDeck) => [...prevDeck, sourceDeckId === 'pokemonList' ? currentPokemonRef.current : pokemon]);
         } else if (destinationDeckId === 'deck2') {
             setDeck2((prevDeck) => [...prevDeck, sourceDeckId === 'pokemonList' ? currentPokemonRef.current : pokemon]);
         }
-    
+
         if (sourceDeckId === 'pokemonList') {
             setCurrentIndex((prevIndex) => prevIndex + 1);
         }
-    };    
+
+        setSelectedPokemon(pokemon);
+    };
 
     if (pokemonList.length === 0) return <p>Loading...</p>;
 
@@ -125,6 +126,8 @@ const PokemonList = () => {
             </div>
             <Decks 
                 handleDropPokemon={handleDropPokemon} 
+                handleSelectPokemon={handleSelectPokemon}
+                selectedPokemon={selectedPokemon}
                 deck1={deck1} 
                 deck2={deck2} 
             />
