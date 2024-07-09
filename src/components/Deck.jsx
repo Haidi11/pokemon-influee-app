@@ -2,12 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import PokemonCard from './PokemonCard';
 
-const CardDeck = ({ title: initialTitle, onDropPokemon, initialDeck, deck, deckId, onRemovePokemon }) => {
+const Deck = ({ title: initialTitle, onDropPokemon, deck, deckId, onRemovePokemon }) => {
     const [title, setTitle] = useState(initialTitle);
-    const [selectedPokemon, setSelectedPokemon] = useState(null);
-
-    useEffect(() => {
-    }, [deck, deckId]);
 
     const [{ isOver }, drop] = useDrop(() => ({
         accept: 'POKEMON',
@@ -17,13 +13,8 @@ const CardDeck = ({ title: initialTitle, onDropPokemon, initialDeck, deck, deckI
         }),
     }));
 
-    const handleSelectPokemon = (pokemon) => {
-        setSelectedPokemon(pokemon);
-    };
-
     const handleDrop = (pokemon, sourceDeckId) => {
         if (!pokemon) return;
-
         onDropPokemon(pokemon, sourceDeckId, deckId);
     };
 
@@ -50,4 +41,4 @@ const CardDeck = ({ title: initialTitle, onDropPokemon, initialDeck, deck, deckI
     );
 };
 
-export default CardDeck;
+export default Deck;

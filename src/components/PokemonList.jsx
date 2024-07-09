@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import PokemonCard from './PokemonCard';
-import CardDeck from './CardDeck';
+import NewCardStack from './NewCardStack';
+import Decks from './Decks';
 
 const PokemonList = () => {
     const [pokemonList, setPokemonList] = useState([]);
@@ -90,19 +90,10 @@ const PokemonList = () => {
 
     return (
         <div className="flex">
-            <div className="w-133 min-w-133 h-164 flex flex-col justify-center items-center rounded overflow-hidden bg-white shadow-lg">
-                <h2 className='font-montserrat text-black font-sans text-lg font-bold tracking-tight text-center'>Card Stack</h2>
-                <div>
-                    {outOfPokemon ? (
-                        <p>No more Pokémon left!</p>
-                    ) : (
-                        pokemonList[currentIndex] && (
-                            <PokemonCard onSelect={handleSelectPokemon} pokemon={pokemonList[currentIndex]} deckId="pokemonList" />
-                        )
-                    )}
-                </div>
-            </div>
-
+            <NewCardStack 
+                pokemon={pokemonList[currentIndex]} 
+                onSelect={handleSelectPokemon}
+            />
             <div className='w-screen h-screen flex justify-center items-center mr-133'>
                 {selectedPokemon && (
                     <div className="max-w-sm rounded-lg overflow-hidden h-350 w-283 bg-white shadow-lg">
@@ -132,15 +123,11 @@ const PokemonList = () => {
                     </div>
                 )}
             </div>
-
-            <div className="flex absolute bottom-12 inset-x-0 flex justify-center">
-                <div className="mr-7">
-                    <CardDeck title="Deck 1" onDropPokemon={handleDropPokemon} initialDeck={deck1} deck={deck1} deckId="deck1"/>
-                </div>
-                <div className="ml-7">
-                    <CardDeck title="Deck 2" onDropPokemon={handleDropPokemon} initialDeck={deck2} deck={deck2} deckId="deck2"/>
-                </div>
-            </div>
+            <Decks 
+                handleDropPokemon={handleDropPokemon} 
+                deck1={deck1} 
+                deck2={deck2} 
+            />
         </div>
     );
 };
