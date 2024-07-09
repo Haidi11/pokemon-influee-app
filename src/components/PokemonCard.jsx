@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
 
-const PokemonCard = ({ pokemon, onSelect }) => {
+const PokemonCard = ({ pokemon, deckId, onSelect }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'POKEMON',
-    item: { pokemon },
+    item: { pokemon, deckId },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
@@ -16,7 +16,7 @@ const PokemonCard = ({ pokemon, onSelect }) => {
       onMouseDown={() => {
         onSelect && onSelect(pokemon);
       }}
-      className="rounded-sm border w-84 h-106 border-gray-200 border-opacity-30 shadow-sm bg-white">
+      className={`rounded-sm border w-84 h-106 border-gray-200 border-opacity-30 shadow-sm bg-white ${isDragging ? 'opacity-50' : 'opacity-100'}`}>
       <img src={pokemon.sprite} alt={pokemon.name} />
       <div>
         <div className='font-montserrat opacity-100 text-black font-semibold text-xs tracking-tight text-center capitalize'>

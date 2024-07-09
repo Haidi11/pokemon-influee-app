@@ -10,11 +10,12 @@ const PokemonList = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [outOfPokemon, setOutOfPokemon] = useState(false);
     const currentIndexRef = useRef(currentIndex);
+    const currentPokemonRef = useRef(null);
 
     useEffect(() => {
         const fetchPokemonList = async () => {
             try {
-                const response = await fetch('https://pokeapi.co/api/v2/pokemon');
+                const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=10');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -55,35 +56,35 @@ const PokemonList = () => {
         currentIndexRef.current = currentIndex;
     }, [currentIndex]);
 
+    useEffect(() => {
+        currentPokemonRef.current = selectedPokemon;
+    }, [selectedPokemon]);
+
     const handleSelectPokemon = (pokemon) => {
         setSelectedPokemon(pokemon);
     };
 
-    const handleDropPokemon1 = () => {
-        const index = currentIndexRef.current;
-        if (index < pokemonList.length) {
-            const pokemonToAdd = pokemonList[index];
-            setDeck1((prevDeck) => {
-                return [...prevDeck, pokemonToAdd];
-            });
-            setCurrentIndex((prevIndex) => prevIndex + 1);
-        } else {
-            setOutOfPokemon(true);
+    const handleDropPokemon = (pokemon, sourceDeckId, destinationDeckId) => {
+        if (!pokemon) return;
+    
+        if (sourceDeckId === destinationDeckId) return;
+    
+        if (sourceDeckId === 'deck1') {
+            setDeck1((prevDeck) => prevDeck.filter((p) => p.name !== pokemon.name));
+        } else if (sourceDeckId === 'deck2') {
+            setDeck2((prevDeck) => prevDeck.filter((p) => p.name !== pokemon.name));
         }
-    };
-
-    const handleDropPokemon2 = () => {
-        const index = currentIndexRef.current;
-        if (index < pokemonList.length) {
-            const pokemonToAdd = pokemonList[index];
-            setDeck2((prevDeck) => {
-                return [...prevDeck, pokemonToAdd];
-            });
-            setCurrentIndex((prevIndex) => prevIndex + 1);
-        } else {
-            setOutOfPokemon(true);
+    
+        if (destinationDeckId === 'deck1') {
+            setDeck1((prevDeck) => [...prevDeck, sourceDeckId === 'pokemonList' ? currentPokemonRef.current : pokemon]);
+        } else if (destinationDeckId === 'deck2') {
+            setDeck2((prevDeck) => [...prevDeck, sourceDeckId === 'pokemonList' ? currentPokemonRef.current : pokemon]);
         }
-    };
+    
+        if (sourceDeckId === 'pokemonList') {
+            setCurrentIndex((prevIndex) => prevIndex + 1);
+        }
+    };    
 
     if (pokemonList.length === 0) return <p>Loading...</p>;
 
@@ -96,7 +97,7 @@ const PokemonList = () => {
                         <p>No more Pokémon left!</p>
                     ) : (
                         pokemonList[currentIndex] && (
-                            <PokemonCard onSelect={handleSelectPokemon} pokemon={pokemonList[currentIndex]} />
+                            <PokemonCard onSelect={handleSelectPokemon} pokemon={pokemonList[currentIndex]} deckId="pokemonList" />
                         )
                     )}
                 </div>
@@ -134,10 +135,10 @@ const PokemonList = () => {
 
             <div className="flex absolute bottom-12 inset-x-0 flex justify-center">
                 <div className="mr-7">
-                    <CardDeck title="Deck 1" onDropPokemon={handleDropPokemon1} initialDeck={deck1} />
+                    <CardDeck title="Deck 1" onDropPokemon={handleDropPokemon} initialDeck={deck1} deck={deck1} deckId="deck1"/>
                 </div>
                 <div className="ml-7">
-                    <CardDeck title="Deck 2" onDropPokemon={handleDropPokemon2} initialDeck={deck2} />
+                    <CardDeck title="Deck 2" onDropPokemon={handleDropPokemon} initialDeck={deck2} deck={deck2} deckId="deck2"/>
                 </div>
             </div>
         </div>
