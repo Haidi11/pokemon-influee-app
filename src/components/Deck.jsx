@@ -1,4 +1,4 @@
-import { React, useState }from 'react';
+import React, { useState } from 'react';
 import { useDrop } from 'react-dnd';
 import PokemonCard from './PokemonCard';
 

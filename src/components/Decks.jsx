@@ -1,29 +1,26 @@
 import React from 'react';
 import Deck from './Deck';
 
-const Decks = ({ handleDropPokemon, handleSelectPokemon, selectedPokemon, deck1, deck2 }) => (
-    <div className="flex absolute bottom-12 inset-x-0 flex justify-center">
-        <div className="mr-7">
+const Decks = ({ handleDropPokemon, handleSelectPokemon, selectedPokemon, deck1, deck2 }) => {
+    const renderDeck = (title, deck, deckId) => (
+        <div className={deckId === "deck1" ? "mr-7" : "ml-7"}>
             <Deck 
-                title="Deck 1" 
-                onDropPokemon={handleDropPokemon} 
-                onSelectPokemon={handleSelectPokemon} 
-                selectedPokemon={selectedPokemon} 
-                deck={deck1} 
-                deckId="deck1" 
+                title={title}
+                onDropPokemon={handleDropPokemon}
+                onSelectPokemon={handleSelectPokemon}
+                selectedPokemon={selectedPokemon}
+                deck={deck}
+                deckId={deckId}
             />
         </div>
-        <div className="ml-7">
-            <Deck 
-                title="Deck 2" 
-                onDropPokemon={handleDropPokemon} 
-                onSelectPokemon={handleSelectPokemon} 
-                selectedPokemon={selectedPokemon} 
-                deck={deck2} 
-                deckId="deck2" 
-            />
+    );
+
+    return (
+        <div className="flex absolute bottom-12 inset-x-0 flex justify-center">
+            {renderDeck("Deck 1", deck1, "deck1")}
+            {renderDeck("Deck 2", deck2, "deck2")}
         </div>
-    </div>
-);
+    );
+};
 
 export default Decks;
