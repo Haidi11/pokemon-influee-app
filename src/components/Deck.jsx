@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDrop } from 'react-dnd';
 import PokemonCard from './PokemonCard';
 
-const Deck = ({ title: initialTitle, onDropPokemon, deck, deckId, onRemovePokemon }) => {
+const Deck = ({ title: initialTitle, onDropPokemon, onSelectPokemon, selectedPokemon, deck, deckId, onRemovePokemon }) => {
     const [title, setTitle] = useState(initialTitle);
 
     const [{ isOver }, drop] = useDrop(() => ({
@@ -32,8 +32,12 @@ const Deck = ({ title: initialTitle, onDropPokemon, deck, deckId, onRemovePokemo
             />
             <div className="flex flex-wrap justify-start place-content-between">
                 {deck.map((pokemon, index) => (
-                    <div key={index} className="mr-2.5">
-                        <PokemonCard key={index} pokemon={pokemon} deckId={deckId} onRemove={onRemovePokemon} />
+                    <div
+                        key={index}
+                        onClick={() => onSelectPokemon(pokemon)}
+                        className={`mr-2.5 ${selectedPokemon?.name === pokemon.name ? 'border-2 border-blue-500 rounded-md shadow-lg' : ''}`}
+                    >
+                        <PokemonCard pokemon={pokemon} deckId={deckId} onRemove={onRemovePokemon} />
                     </div>
                 ))}
             </div>
